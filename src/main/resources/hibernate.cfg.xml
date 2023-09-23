@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/expense_project</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">yarik1696</property>
+
+        <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property> <!--выбираем язык-->
+        <property name="hibernate.connection.characterEncoding">utf8</property> <!--выбираем кодировку, чтобы не было проблем с русским-->
+
+        <property name="connection.pool_size">3</property>
+        <property name="current_session_context_class">thread</property> <!--привязываем сессию к потоку-->
+        <property name="show_sql">true</property> <!--выводить запросы-->
+        <property name="format_sql">true</property> <!--выводить запросы не в строку-->
+        <property name="hbm2ddl.auto">update</property><!--update может создавать и изменять данные-->
+
+        <mapping class="by.dmitry.yarashevich.models.User"/>
+        <mapping class="by.dmitry.yarashevich.models.ExpenseRecord"/>
+        <mapping class="by.dmitry.yarashevich.models.ExpenseCategory"/>
+
+    </session-factory>
+</hibernate-configuration>
