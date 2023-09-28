@@ -2,11 +2,14 @@ package by.dmitry.yarashevich.dao.user.impl;
 
 import by.dmitry.yarashevich.dao.parser.ResultSetUserParser;
 import by.dmitry.yarashevich.dao.user.UserDao;
-import by.dmitry.yarashevich.models.User;
 import by.dmitry.yarashevich.dao.util.MysqlUtil;
+import by.dmitry.yarashevich.models.User;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,34 +19,9 @@ public class UserJdbcMysqlDao implements UserDao {
 
 
     public static void main(String[] args) {
-//        new PersonJdbcMysqlDao().incrementUserAge();
-//        new UserJdbcMysqlDao().createUser(new User("zak", "31"));
         System.out.println( new UserJdbcMysqlDao().readAllUsers());
 
     }
-
-//    public void incrementUserAge(){
-//        String sql = "call increment_person_age";
-//        Connection connection = null;
-//        CallableStatement statement = null;
-//        try {
-//            //2. connection
-//            connection = MysqlUtil.getConnection();
-//            //3. statement
-//            statement = connection.prepareCall(sql);
-//            //4. execute sql query
-//            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     @Override
     public List<User> readAllUsers() {
@@ -82,12 +60,10 @@ public class UserJdbcMysqlDao implements UserDao {
         PreparedStatement statement = null;
         try {
 
-            //3. statement
             statement = connection.prepareStatement(sql);
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
 
-            //4. execute sql query
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,13 +80,11 @@ public class UserJdbcMysqlDao implements UserDao {
     public void createUser(List<User> personList) {
         try (Statement statement = connection.createStatement()) {
 
-            //begin transaction in manually mode
             connection.setAutoCommit(false);
             try {
                 for (User user : personList) {
                     String sql = String.format("INSERT INTO `expense_project`.`user` (`name`, `password`) VALUES ('%s', %s)", user.getName(), user.getPassword());
 
-                    //4. execute sql query
                     statement.executeUpdate(sql);
                 }
                 connection.commit();

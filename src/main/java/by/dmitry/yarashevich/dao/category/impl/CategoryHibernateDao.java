@@ -1,9 +1,7 @@
 package by.dmitry.yarashevich.dao.category.impl;
 
 import by.dmitry.yarashevich.dao.category.ExpenseCategoryDao;
-import by.dmitry.yarashevich.dao.user.impl.UserHibernateDao;
 import by.dmitry.yarashevich.models.ExpenseCategory;
-import by.dmitry.yarashevich.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,12 +14,8 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
     private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     public static void main(String[] args) {
-        UserHibernateDao userHibernateDao = new UserHibernateDao();
-        User user = new User("Jeck", "Pit");
-        userHibernateDao.createUser(user);
-
         CategoryHibernateDao categoryDao = new CategoryHibernateDao();
-        categoryDao.createCategory(new ExpenseCategory("111", user));
+        categoryDao.createCategory(new ExpenseCategory("Какая-то"));
     }
 
     @Override
@@ -51,7 +45,6 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
             return new ArrayList<>();
         }
     }
-
 
     @Override
     public ExpenseCategory getCategoryById(int categoryId) {
@@ -84,29 +77,6 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
             return new ExpenseCategory();
         }
     }
-
-//    public List<Person> readAllPersonsNameStartWithAndAgeBetween(String prefixName, int minAge, int maxAge) {
-//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        try {
-//            Criteria criteria = session.createCriteria(Person.class);
-////            criteria.add();
-//            criteria.add(Restrictions.and(
-//                    Restrictions.ilike("name", prefixName + "%"),
-//                    Restrictions.ge("age", minAge),
-//                    Restrictions.le("age", maxAge)));
-////            criteria.add(Restrictions.between("age", minAge, maxAge));
-//
-//            List<Person> list = criteria.list();
-//            transaction.commit();
-//            System.out.println(list);
-//            return list;
-//        } catch (Exception e) {
-//            transaction.rollback();
-//            return new ArrayList<Person>();
-//        }
-//    }
 
     @Override
     public void updateCategory(ExpenseCategory updatedCategory) {

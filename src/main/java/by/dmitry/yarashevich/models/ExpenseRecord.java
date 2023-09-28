@@ -1,13 +1,12 @@
 package by.dmitry.yarashevich.models;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
 import jakarta.persistence.*;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity(name = "expenserecord")
 @Table(name = "expenserecord")

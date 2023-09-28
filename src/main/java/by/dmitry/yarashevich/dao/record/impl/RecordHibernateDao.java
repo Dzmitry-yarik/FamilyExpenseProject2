@@ -28,11 +28,11 @@ public class RecordHibernateDao implements ExpenseRecordDao {
         userHibernateDao.createUser(user);
 
         CategoryHibernateDao categoryHibernateDao = new CategoryHibernateDao();
-        ExpenseCategory expenseCategory = new ExpenseCategory("Разное", user);
+        ExpenseCategory expenseCategory = new ExpenseCategory("Разное");
         categoryHibernateDao.createCategory(expenseCategory);
 
         RecordHibernateDao recordHibernateDao = new RecordHibernateDao();
-        ExpenseRecord expenseRecord = new ExpenseRecord("йцуйц", 51.0, LocalDate.of(2023, 9, 3), user, expenseCategory);
+        ExpenseRecord expenseRecord = new ExpenseRecord("что-то", 51.0, LocalDate.of(2023, 9, 3), user, expenseCategory);
         recordHibernateDao.createRecord(expenseRecord);
     }
 
@@ -105,38 +105,15 @@ public class RecordHibernateDao implements ExpenseRecordDao {
         return recordsByUser;
     }
 
-//    public List<Person> readAllPersonsNameStartWithAndAgeBetween(String prefixName, int minAge, int maxAge) {
-//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        try {
-//            Criteria criteria = session.createCriteria(Person.class);
-////            criteria.add();
-//            criteria.add(Restrictions.and(
-//                    Restrictions.ilike("name", prefixName + "%"),
-//                    Restrictions.ge("age", minAge),
-//                    Restrictions.le("age", maxAge)));
-////            criteria.add(Restrictions.between("age", minAge, maxAge));
-//
-//            List<Person> list = criteria.list();
-//            transaction.commit();
-//            System.out.println(list);
-//            return list;
-//        } catch (Exception e) {
-//            transaction.rollback();
-//            return new ArrayList<Person>();
-//        }
-//    }
-
     @Override
     public void updateRecord(ExpenseRecord updatedRecord) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             session.update(updatedRecord);
-            transaction.commit();             //подтверждаем изменения
+            transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();           //отказываем изменения
+            transaction.rollback();
             throw new RuntimeException(e);
         }
     }

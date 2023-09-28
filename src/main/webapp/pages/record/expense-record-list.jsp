@@ -63,18 +63,11 @@
     </c:forEach>
     </tbody>
 </table>
-
 <div>
     <button onclick="showRecords('all')">All</button>
     <button onclick="showRecords('month')">Current month</button>
 </div>
-
-<c:set var="totalAmount" value="0"/>
-<c:forEach items="${records}" var="record">
-    <c:set var="totalAmount" value="${totalAmount + record.amount}"/>
-</c:forEach>
-<p>Total: ${totalAmount}</p>
-
+<br>
 <form action="record" method="post">
     <input type="hidden" name="action" value="create-record">
     <input type="submit" value="Add Record">

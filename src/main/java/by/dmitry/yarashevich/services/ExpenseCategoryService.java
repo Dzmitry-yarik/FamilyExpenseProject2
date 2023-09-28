@@ -12,10 +12,6 @@ public class ExpenseCategoryService {
     public ExpenseCategoryService() {
     }
 
-//    public ExpenseCategoryService(ExpenseCategoryDao expenseCategoryDao) {
-//        this.expenseCategoryDao = expenseCategoryDao;
-//    }
-
     public void createExpenseCategory(String name) {
         ExpenseCategory expenseCategory = new ExpenseCategory(name);
         createCategory(expenseCategory);

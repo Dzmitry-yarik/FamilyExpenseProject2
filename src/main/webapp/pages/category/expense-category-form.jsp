@@ -13,12 +13,7 @@
     <input type="hidden" name="id" value="${empty category ? '' : category.category_id}">
     <label for="name">Name:</label>
     <input id="name" type="text" name="name" value="${empty category ? '' : category.name}">
-    <br>
-    User: <select name="userId">
-    <c:forEach items="${users}" var="user">
-        <option value="${user.user_id}" ${user.user_id == record.user.user_id ? 'selected' : ''}>${user.name}</option>
-    </c:forEach>
-</select>
+
     <br>
     <input type="submit" value="${empty category ? 'Create' : 'Update'}">
     <input type="button" value="Back" onclick="window.history.back();">

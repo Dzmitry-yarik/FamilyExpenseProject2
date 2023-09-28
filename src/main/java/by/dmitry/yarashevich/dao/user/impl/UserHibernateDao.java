@@ -79,38 +79,15 @@ public class UserHibernateDao implements UserDao {
         }
     }
 
-//    public List<Person> readAllPersonsNameStartWithAndAgeBetween(String prefixName, int minAge, int maxAge) {
-//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        try {
-//            Criteria criteria = session.createCriteria(Person.class);
-////            criteria.add();
-//            criteria.add(Restrictions.and(
-//                    Restrictions.ilike("name", prefixName + "%"),
-//                    Restrictions.ge("age", minAge),
-//                    Restrictions.le("age", maxAge)));
-////            criteria.add(Restrictions.between("age", minAge, maxAge));
-//
-//            List<Person> list = criteria.list();
-//            transaction.commit();
-//            System.out.println(list);
-//            return list;
-//        } catch (Exception e) {
-//            transaction.rollback();
-//            return new ArrayList<Person>();
-//        }
-//    }
-
     @Override
     public void updateUser(User updatedUser) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             session.update(updatedUser);
-            transaction.commit();             //подтверждаем изменения
+            transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();           //отказываем изменения
+            transaction.rollback();
             throw new RuntimeException(e);
         }
     }

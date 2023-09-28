@@ -13,10 +13,10 @@ public class ResultSetRecordParser implements ResultSetParser {
     @Override
     public <T> T parserObject(ResultSet rs) throws SQLException {
         int userId = rs.getInt("user_id");
-        User user = new UserJdbcMysqlDao().getUserById(userId); // метод для получения объекта User по ID
+        User user = new UserJdbcMysqlDao().getUserById(userId);
 
         int categoryId = rs.getInt("category_id");
-        ExpenseCategory category = new CategoryJdbcMysqlDao().getCategoryById(categoryId); // метод для получения объекта ExpenseCategory по ID
+        ExpenseCategory category = new CategoryJdbcMysqlDao().getCategoryById(categoryId);
 
         return (T) ExpenseRecord.builder()
                 .record_id(rs.getInt("record_id"))

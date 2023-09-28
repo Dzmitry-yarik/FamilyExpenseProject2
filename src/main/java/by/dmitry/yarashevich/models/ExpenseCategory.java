@@ -26,10 +26,6 @@ public class ExpenseCategory {
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<ExpenseRecord> recordSet;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable=false)
-    private User categoryOwner;
-
     public ExpenseCategory() {
     }
 
@@ -47,28 +43,10 @@ public class ExpenseCategory {
         this.recordSet = recordList;
     }
 
-    public ExpenseCategory(String name, User categoryOwner) {
-         this.name = name;
-        this.categoryOwner = categoryOwner;
-    }
-
-    public ExpenseCategory(int category_id, String name, User categoryOwner) {
+    public ExpenseCategory(int category_id, String name, Set<ExpenseRecord> recordSet) {
         this.category_id = category_id;
         this.name = name;
-        this.categoryOwner = categoryOwner;
-    }
-
-    public ExpenseCategory(String name, Set<ExpenseRecord> recordList, User categoryOwner) {
-        this.name = name;
-        this.recordSet = recordList;
-        this.categoryOwner = categoryOwner;
-    }
-
-    public ExpenseCategory(int category_id, String name, Set<ExpenseRecord> recordList, User categoryOwner) {
-        this.category_id = category_id;
-        this.name = name;
-        this.recordSet = recordList;
-        this.categoryOwner = categoryOwner;
+        this.recordSet = recordSet;
     }
 
     @Override

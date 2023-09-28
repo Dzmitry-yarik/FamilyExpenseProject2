@@ -2,17 +2,12 @@ package by.dmitry.yarashevich.services;
 
 import by.dmitry.yarashevich.dao.user.UserDao;
 import by.dmitry.yarashevich.dao.user.impl.UserHibernateDao;
-import by.dmitry.yarashevich.dao.user.impl.UserJdbcMysqlDao;
 import by.dmitry.yarashevich.models.User;
 
 import java.util.List;
 
 public class UserService{
     private UserDao userDao = new UserHibernateDao();
-
-//    public UserService(UserDao userDao) {
-//        this.userDao = userDao;
-//    }
 
     public UserService() {
     }

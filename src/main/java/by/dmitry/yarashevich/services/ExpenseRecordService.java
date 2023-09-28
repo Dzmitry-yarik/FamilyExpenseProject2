@@ -13,10 +13,6 @@ public class ExpenseRecordService {
 
      private ExpenseRecordDao expenseRecordDao = new RecordHibernateDao();
 
-//    public ExpenseRecordService(ExpenseRecordDao expenseRecordDao) {
-//        this.expenseRecordDao = expenseRecordDao;
-//    }
-
     public ExpenseRecordService() {
     }
 

@@ -1,18 +1,16 @@
 package by.dmitry.yarashevich.dao.record.impl;
 
-import by.dmitry.yarashevich.dao.category.ExpenseCategoryDao;
 import by.dmitry.yarashevich.dao.parser.ResultSetRecordParser;
-import by.dmitry.yarashevich.dao.parser.ResultSetUserParser;
 import by.dmitry.yarashevich.dao.record.ExpenseRecordDao;
-import by.dmitry.yarashevich.dao.user.UserDao;
 import by.dmitry.yarashevich.dao.util.MysqlUtil;
 import by.dmitry.yarashevich.models.ExpenseCategory;
 import by.dmitry.yarashevich.models.ExpenseRecord;
-import by.dmitry.yarashevich.models.User;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,36 +20,8 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
 
     public static void main(String[] args) {
-//        new PersonJdbcMysqlDao().incrementUserAge();
-//        new UserJdbcMysqlDao().createUser(new User("zak", "31"));
         System.out.println(new RecordJdbcMysqlDao().readAllExpenseRecord());
-
-
     }
-
-//    public void incrementUserAge(){
-//        String sql = "call increment_person_age";
-//        Connection connection = null;
-//        CallableStatement statement = null;
-//        try {
-//            //2. connection
-//            connection = MysqlUtil.getConnection();
-//            //3. statement
-//            statement = connection.prepareCall(sql);
-//            //4. execute sql query
-//            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
 
     @Override
     public ExpenseRecord getRecordById(int recordId) {
@@ -90,7 +60,6 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
         PreparedStatement statement = null;
         try {
 
-            //3. statement
             statement = connection.prepareStatement(sql);
             statement.setString(1, record.getName());
             statement.setDouble(2, record.getAmount());
@@ -98,7 +67,6 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
             statement.setObject(4, record.getUser());
             statement.setObject(5, record.getCategory());
 
-            //4. execute sql query
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

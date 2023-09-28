@@ -29,9 +29,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<ExpenseRecord> recordSet;
 
-    @OneToMany(mappedBy = "categoryOwner", fetch = FetchType.EAGER)
-    private Set<ExpenseCategory> categorySet;
-
     public User() {
     }
 
@@ -51,14 +48,6 @@ public class User {
         this.name = name;
         this.password = password;
         this.recordSet = recordSet;
-    }
-
-    public User(int user_id, String name, String password, Set<ExpenseRecord> recordSet, Set<ExpenseCategory> categorySet) {
-        this.user_id = user_id;
-        this.name = name;
-        this.password = password;
-        this.recordSet = recordSet;
-        this.categorySet = categorySet;
     }
 
     @Override

@@ -1,10 +1,9 @@
 package by.dmitry.yarashevich.dao.category.impl;
 
-import by.dmitry.yarashevich.dao.parser.ResultSetCategoryParser;
 import by.dmitry.yarashevich.dao.category.ExpenseCategoryDao;
+import by.dmitry.yarashevich.dao.parser.ResultSetCategoryParser;
 import by.dmitry.yarashevich.dao.util.MysqlUtil;
 import by.dmitry.yarashevich.models.ExpenseCategory;
-import by.dmitry.yarashevich.models.User;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.sql.Connection;
@@ -18,33 +17,8 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     private Connection connection = MysqlUtil.getConnection();
 
     public static void main(String[] args) {
-//        new PersonJdbcMysqlDao().incrementUserAge();
-//        new UserJdbcMysqlDao().createUser(new User("zak", "31"));
         System.out.println( new CategoryJdbcMysqlDao().readAllExpenseCategory());
     }
-
-//    public void incrementUserAge(){
-//        String sql = "call increment_person_age";
-//        Connection connection = null;
-//        CallableStatement statement = null;
-//        try {
-//            //2. connection
-//            connection = MysqlUtil.getConnection();
-//            //3. statement
-//            statement = connection.prepareCall(sql);
-//            //4. execute sql query
-//            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     @Override
     public void createCategory(ExpenseCategory category) {
@@ -53,11 +27,9 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
         PreparedStatement statement = null;
         try {
 
-            //3. statement
             statement = connection.prepareStatement(sql);
             statement.setString(1, category.getName());
 
-            //4. execute sql query
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
