@@ -1,0 +1,2 @@
+# FamilyExpenseProject2
+Application for cost accounting: created using Java EE and Hibernate technology, is designed to facilitate accounting for financial expenses. It has the functionality to create, edit and delete user profiles, expense categories and expense items. The presented application serves as an effective tool for the organization and management of financial resources, thereby ensuring reliable accounting
