@@ -14,7 +14,6 @@ public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        // Настройте SessionFactory из hibernate.cfg.xml
         return new Configuration().configure().buildSessionFactory();
     }
 
