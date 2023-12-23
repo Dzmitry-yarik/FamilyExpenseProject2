@@ -32,7 +32,7 @@ public class MysqlUtil {
             Class.forName(MYSQL_JDBC_DRIVER);
             connection = dataSource.getConnection();
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e);
             throw new RuntimeException(e);
         }
         return connection;
