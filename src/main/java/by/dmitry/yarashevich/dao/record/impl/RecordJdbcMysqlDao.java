@@ -18,7 +18,6 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
     private Connection connection = MysqlUtil.getConnection();
 
-
     public static void main(String[] args) {
         System.out.println(new RecordJdbcMysqlDao().readAllExpenseRecord());
     }

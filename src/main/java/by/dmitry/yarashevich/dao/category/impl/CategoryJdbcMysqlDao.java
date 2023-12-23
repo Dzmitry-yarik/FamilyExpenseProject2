@@ -23,13 +23,10 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     @Override
     public void createCategory(ExpenseCategory category) {
         String sql = "INSERT INTO `expense_project`.`expensecategory` (`name`) VALUES (?)";
-
         PreparedStatement statement = null;
         try {
-
             statement = connection.prepareStatement(sql);
             statement.setString(1, category.getName());
-
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -46,7 +43,6 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     @Override
     public List<ExpenseCategory> readAllExpenseCategory() {
         String sql = "SELECT * FROM expense_project.expensecategory";
-
         ArrayList<ExpenseCategory> categories = MysqlUtil.executeSqlReadQuery(sql, new ResultSetCategoryParser());
         return categories;
     }
@@ -54,7 +50,6 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     @Override
     public ExpenseCategory getCategoryById(int categoryId) {
         String sql = String.format("SELECT * FROM expense_project.expensecategory where category_id = %d", categoryId);
-
         ArrayList<ExpenseCategory> categories = MysqlUtil.executeSqlReadQuery(sql, new ResultSetCategoryParser());
         if (CollectionUtils.isNotEmpty(categories)) {
             return categories.get(0);
@@ -65,7 +60,6 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     @Override
     public ExpenseCategory getCategoryByName(String categoryName) {
         String sql = String.format("SELECT * FROM expense_project.expensecategory where name = %s", categoryName);
-
         ArrayList<ExpenseCategory> categories = MysqlUtil.executeSqlReadQuery(sql, new ResultSetCategoryParser());
         if (CollectionUtils.isNotEmpty(categories)) {
             return categories.get(0);

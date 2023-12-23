@@ -1,18 +1,13 @@
 package by.dmitry.yarashevich.dao.user.impl;
 
 import by.dmitry.yarashevich.dao.user.UserDao;
+import by.dmitry.yarashevich.dao.util.HibernateUtil;
 import by.dmitry.yarashevich.models.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserHibernateDao implements UserDao {
 
-    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private HibernateUtil hibernateUtil = new HibernateUtil();
 
     public static void main(String[] args) {
         UserHibernateDao userDao = new UserHibernateDao();
@@ -21,88 +16,47 @@ public class UserHibernateDao implements UserDao {
 
     @Override
     public void createUser(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        HibernateUtil.executeTransaction(session -> {
             session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        }
+            return null;
+        });
     }
 
     @Override
     public List<User> readAllUsers() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            List<User> list = session.createQuery("from user", User.class).list();
-
-            transaction.commit();
-            return list;
-        } catch (Exception e) {
-            transaction.rollback();
-            return new ArrayList<>();
-        }
+        return HibernateUtil.executeTransaction(session ->
+                session.createQuery("from user", User.class).getResultList());
     }
 
     @Override
     public User getUserById(int userId) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            User userById = session.get(User.class, userId);
-            transaction.commit();
-            session.close();
-            System.out.println();
-            return userById;
-        } catch (Exception e) {
-            transaction.rollback();
-            return new User();
-        }
+        return HibernateUtil.executeTransaction(session -> session.get(User.class, userId));
     }
 
     @Override
     public User getUserByName(String username) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            User userById = session.get(User.class, username);
-            transaction.commit();
-            session.close();
-            System.out.println();
-            return userById;
-        } catch (Exception e) {
-            transaction.rollback();
-            return new User();
-        }
+        return HibernateUtil.executeTransaction(session ->
+                session.createQuery("from user u where u.name = :name", User.class)
+                        .setParameter("username", username)
+                        .uniqueResult());
     }
 
     @Override
     public void updateUser(User updatedUser) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        HibernateUtil.executeTransaction(session -> {
             session.update(updatedUser);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            throw new RuntimeException(e);
-        }
+            return null;
+        });
     }
 
     @Override
     public void deleteUser(int userId) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        HibernateUtil.executeTransaction(session -> {
             User userById = session.get(User.class, userId);
-            session.delete(userById);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            throw new RuntimeException(e);
-        }
+            if (userById != null) {
+                session.delete(userById);
+            }
+            return null;
+        });
     }
 }

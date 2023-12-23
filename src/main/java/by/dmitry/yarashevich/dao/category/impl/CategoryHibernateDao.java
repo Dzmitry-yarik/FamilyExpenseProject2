@@ -37,7 +37,6 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
         Transaction transaction = session.beginTransaction();
         try {
             List<ExpenseCategory> list = session.createQuery("from expensecategory", ExpenseCategory.class).list();
-
             transaction.commit();
             return list;
         } catch (Exception e) {

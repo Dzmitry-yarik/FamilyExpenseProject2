@@ -30,9 +30,9 @@ public class MysqlUtil {
         Connection connection;
         try {
             Class.forName(MYSQL_JDBC_DRIVER);
-            connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            connection = dataSource.getConnection();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return connection;
@@ -64,5 +64,4 @@ public class MysqlUtil {
         }
         return objectList;
     }
-
 }
