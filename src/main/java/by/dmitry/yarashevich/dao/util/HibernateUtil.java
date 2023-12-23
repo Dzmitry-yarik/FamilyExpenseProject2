@@ -6,21 +6,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class HibernateUtil {
-
+// http://localhost:8080/user?action=list - для запуска приложения
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
         return new Configuration().configure().buildSessionFactory();
     }
 
-    public static <R> R executeTransaction(Function<Session, R> action) {
+    public static <T> T executeTransaction(Function<Session, T> action) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        R result = null;
+        T result;
         try {
             result = action.apply(session);
             transaction.commit();
@@ -31,9 +30,5 @@ public class HibernateUtil {
             session.close();
         }
         return result;
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

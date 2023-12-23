@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.*;
 
-// http://localhost:8080/user?action=list - для запуска приложения
 public class UserServlet extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -87,7 +86,6 @@ public class UserServlet extends HttpServlet {
             PrintWriter writer = resp.getWriter();
             writer.println("Такой пользователь уже существует");
         }
-
         resp.sendRedirect("user?action=list");
     }
 
