@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name = "user")
+@Entity
 @Table(name = "user")
 @Builder
 @Getter

@@ -13,11 +13,6 @@ import java.util.List;
 public class CategoryHibernateDao implements ExpenseCategoryDao {
     private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-    public static void main(String[] args) {
-        CategoryHibernateDao categoryDao = new CategoryHibernateDao();
-        categoryDao.createCategory(new ExpenseCategory("Какая-то"));
-    }
-
     @Override
     public void createCategory(ExpenseCategory expenseCategory) {
         Session session = sessionFactory.openSession();
@@ -36,7 +31,7 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            List<ExpenseCategory> list = session.createQuery("from expensecategory", ExpenseCategory.class).list();
+            List<ExpenseCategory> list = session.createQuery("from ExpenseCategory", ExpenseCategory.class).list();
             transaction.commit();
             return list;
         } catch (Exception e) {

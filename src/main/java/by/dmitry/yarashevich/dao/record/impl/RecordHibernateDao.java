@@ -22,20 +22,6 @@ public class RecordHibernateDao implements ExpenseRecordDao {
 
     private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-    public static void main(String[] args) {
-        UserHibernateDao userHibernateDao = new UserHibernateDao();
-        User user = new User("Jon", "Smitt");
-        userHibernateDao.createUser(user);
-
-        CategoryHibernateDao categoryHibernateDao = new CategoryHibernateDao();
-        ExpenseCategory expenseCategory = new ExpenseCategory("Разное");
-        categoryHibernateDao.createCategory(expenseCategory);
-
-        RecordHibernateDao recordHibernateDao = new RecordHibernateDao();
-        ExpenseRecord expenseRecord = new ExpenseRecord("что-то", 51.0, LocalDate.of(2023, 9, 3), user, expenseCategory);
-        recordHibernateDao.createRecord(expenseRecord);
-    }
-
     @Override
     public void createRecord(ExpenseRecord expenseRecord) {
         Session session = sessionFactory.openSession();
@@ -54,7 +40,7 @@ public class RecordHibernateDao implements ExpenseRecordDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            List<ExpenseRecord> list = session.createQuery("from expenserecord", ExpenseRecord.class).list();
+            List<ExpenseRecord> list = session.createQuery("from ExpenseRecord", ExpenseRecord.class).list();
 
             transaction.commit();
             return list;

@@ -16,10 +16,6 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
 
     private Connection connection = MysqlUtil.getConnection();
 
-    public static void main(String[] args) {
-        System.out.println( new CategoryJdbcMysqlDao().readAllExpenseCategory());
-    }
-
     @Override
     public void createCategory(ExpenseCategory category) {
         String sql = "INSERT INTO `expense_project`.`expensecategory` (`name`) VALUES (?)";

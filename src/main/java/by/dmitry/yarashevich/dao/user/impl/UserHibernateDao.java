@@ -7,17 +7,10 @@ import java.util.List;
 
 public class UserHibernateDao implements UserDao {
 
-    private HibernateUtil hibernateUtil = new HibernateUtil();
-
-    public static void main(String[] args) {
-        UserHibernateDao userDao = new UserHibernateDao();
-        userDao.createUser(new User("Jon", "Smit"));
-    }
-
     @Override
     public void createUser(User user) {
         HibernateUtil.executeTransaction(session -> {
-            session.save(user);
+            session.persist(user);
             return null;
         });
     }
@@ -25,7 +18,7 @@ public class UserHibernateDao implements UserDao {
     @Override
     public List<User> readAllUsers() {
         return HibernateUtil.executeTransaction(session ->
-                session.createQuery("from user", User.class).getResultList());
+                session.createQuery("from User", User.class).getResultList());
     }
 
     @Override
@@ -36,7 +29,7 @@ public class UserHibernateDao implements UserDao {
     @Override
     public User getUserByName(String username) {
         return HibernateUtil.executeTransaction(session ->
-                session.createQuery("from user u where u.name = :name", User.class)
+                session.createQuery("from User u where u.name = :name", User.class)
                         .setParameter("username", username)
                         .uniqueResult());
     }
@@ -44,7 +37,7 @@ public class UserHibernateDao implements UserDao {
     @Override
     public void updateUser(User updatedUser) {
         HibernateUtil.executeTransaction(session -> {
-            session.update(updatedUser);
+            session.merge(updatedUser);
             return null;
         });
     }
@@ -54,7 +47,7 @@ public class UserHibernateDao implements UserDao {
         HibernateUtil.executeTransaction(session -> {
             User userById = session.get(User.class, userId);
             if (userById != null) {
-                session.delete(userById);
+                session.remove(userById);
             }
             return null;
         });

@@ -1,19 +1,18 @@
 package by.dmitry.yarashevich.dao.util;
 
-import by.dmitry.yarashevich.dao.user.UserDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.io.File;
 import java.util.function.Function;
 
 public class HibernateUtil {
-// http://localhost:8080/user?action=list - для запуска приложения
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        return new Configuration().configure().buildSessionFactory();
+        return new Configuration().configure(new File("src/main/resources/hibernate.cfg.xml")).buildSessionFactory();
     }
 
     public static <T> T executeTransaction(Function<Session, T> action) {

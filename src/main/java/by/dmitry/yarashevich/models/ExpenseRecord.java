@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity(name = "expenserecord")
+@Entity
 @Table(name = "expenserecord")
 @Builder
 @Getter

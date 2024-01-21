@@ -18,10 +18,6 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
     private Connection connection = MysqlUtil.getConnection();
 
-    public static void main(String[] args) {
-        System.out.println(new RecordJdbcMysqlDao().readAllExpenseRecord());
-    }
-
     @Override
     public ExpenseRecord getRecordById(int recordId) {
         String sql = String.format("SELECT * FROM expense_project.expenserecord where record_id = %d", recordId);
@@ -58,7 +54,6 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
         PreparedStatement statement = null;
         try {
-
             statement = connection.prepareStatement(sql);
             statement.setString(1, record.getName());
             statement.setDouble(2, record.getAmount());
