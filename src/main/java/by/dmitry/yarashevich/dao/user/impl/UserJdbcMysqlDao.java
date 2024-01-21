@@ -18,14 +18,19 @@ public class UserJdbcMysqlDao implements UserDao {
     private final Connection connection = MysqlUtil.getConnection();
 
     @Override
-    public List<User> readAllUsers() {
-        String sql = "SELECT * FROM expense_project.user";
-        ArrayList<User> users = MysqlUtil.executeSqlReadQuery(sql, new ResultSetUserParser());
-        return users;
+    public List<User> readAll() {
+        return MysqlUtil.executeSqlReadQuery( "SELECT * FROM expense_project.user", new ResultSetUserParser());
     }
+//или
+//    @Override
+//    public List<User> readAll() {
+//        String sql = "SELECT * FROM expense_project.user";
+//        ArrayList<User> users = MysqlUtil.executeSqlReadQuery(sql, new ResultSetUserParser());
+//        return users;
+//    }
 
     @Override
-    public User getUserById(int userId) {
+    public User get(int userId) {
         String sql = String.format("SELECT * FROM expense_project.user where user_id = %d", userId);
         ArrayList<User> users = MysqlUtil.executeSqlReadQuery(sql, new ResultSetUserParser());
         if (CollectionUtils.isNotEmpty(users)) {
@@ -35,8 +40,8 @@ public class UserJdbcMysqlDao implements UserDao {
     }
 
     @Override
-    public User getUserByName(String username) {
-        String sql = String.format("SELECT * FROM expense_project.user where name = %s", username);
+    public User getUserByName(String userName) {
+        String sql = String.format("SELECT * FROM expense_project.user where name = %s", userName);
         ArrayList<User> users = MysqlUtil.executeSqlReadQuery(sql, new ResultSetUserParser());
         if (CollectionUtils.isNotEmpty(users)) {
             return users.get(0);
@@ -45,7 +50,7 @@ public class UserJdbcMysqlDao implements UserDao {
     }
 
     @Override
-    public void createUser(User user) {
+    public void create(User user) {
         String sql = "INSERT INTO `expense_project`.`user` (`name`, `password`) VALUES (?, ?)";
         PreparedStatement statement = null;
         try {
@@ -65,11 +70,11 @@ public class UserJdbcMysqlDao implements UserDao {
         }
     }
 
-    public void createUser(List<User> personList) {
+    public void create(List<User> userList) {
         try (Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
             try {
-                for (User user : personList) {
+                for (User user : userList) {
                     String sql = String.format("INSERT INTO `expense_project`.`user` (`name`, `password`) VALUES ('%s', %s)", user.getName(), user.getPassword());
                     statement.executeUpdate(sql);
                 }
@@ -84,14 +89,14 @@ public class UserJdbcMysqlDao implements UserDao {
     }
 
     @Override
-    public void updateUser(User updatedUser) {
+    public void update(User updatedUser) {
         StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`user` SET `name` = '" + updatedUser.getName() +
                 "', `password` = '" + updatedUser.getPassword() + "' WHERE (`user_id` = '" + updatedUser.getUser_id() + "')");
         MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public void delete(int userId) {
         StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`user` WHERE (`user_id` = '" + userId + "');");
         MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
     }

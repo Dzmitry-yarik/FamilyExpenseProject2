@@ -7,7 +7,7 @@ import by.dmitry.yarashevich.models.ExpenseCategory;
 import java.util.List;
 
 public class ExpenseCategoryService {
-    private ExpenseCategoryDao expenseCategoryDao = new CategoryHibernateDao();
+    private final ExpenseCategoryDao expenseCategoryDao = new CategoryHibernateDao();
 
     public ExpenseCategoryService() {
     }
@@ -18,15 +18,15 @@ public class ExpenseCategoryService {
     }
 
     public void createCategory(ExpenseCategory category) {
-        expenseCategoryDao.createCategory(category);
+        expenseCategoryDao.create(category);
     }
 
     public List<ExpenseCategory> readAllExpenseCategory() {
-        return expenseCategoryDao.readAllExpenseCategory();
+        return expenseCategoryDao.readAll();
     }
 
     public ExpenseCategory getCategoryById(int categoryId) {
-        return expenseCategoryDao.getCategoryById(categoryId);
+        return expenseCategoryDao.get(categoryId);
     }
 
     public ExpenseCategory getCategoryByName(String categoryName) {
@@ -39,10 +39,10 @@ public class ExpenseCategoryService {
     }
 
     public void updateCategory(ExpenseCategory category) {
-        expenseCategoryDao.updateCategory(category);
+        expenseCategoryDao.update(category);
     }
 
     public void deleteCategory(int categoryId) {
-        expenseCategoryDao.deleteCategory(categoryId);
+        expenseCategoryDao.delete(categoryId);
     }
 }

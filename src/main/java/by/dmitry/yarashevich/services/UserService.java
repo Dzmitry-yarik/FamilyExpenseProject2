@@ -7,7 +7,7 @@ import by.dmitry.yarashevich.models.User;
 import java.util.List;
 
 public class UserService{
-    private UserDao userDao = new UserHibernateDao();
+    private final UserDao userDao = new UserHibernateDao();
 
     public UserService() {
     }
@@ -21,34 +21,34 @@ public class UserService{
             } else  createUserFlag = true;
         } while (!createUserFlag);
         User user = new User(id, name, password);
-        userDao.createUser(user);
+        userDao.create(user);
     }
 
     public void createUser(User user) {
-        userDao.createUser(user);
+        userDao.create(user);
     }
 
     public List<User> readAllUsers() {
-        return userDao.readAllUsers();
+        return userDao.readAll();
     }
 
     public User getUserById(int userId) {
-        return userDao.getUserById(userId);
+        return userDao.get(userId);
     }
 
     public User getUserByName(String userName) {
         return userDao.getUserByName(userName);
     }
 
-    public void updatePerson(int userIdParam, String updatedUserNameParam, String updatedUserPasswordParam) {
+    public void updateUser(int userIdParam, String updatedUserNameParam, String updatedUserPasswordParam) {
         User user = new User(userIdParam, updatedUserNameParam, updatedUserPasswordParam);
         updateUser(user);
     }
     public void updateUser(User user) {
-        userDao.updateUser(user);
+        userDao.update(user);
     }
 
     public void deleteUser(int userId) {
-        userDao.deleteUser(userId);
+        userDao.delete(userId);
     }
 }

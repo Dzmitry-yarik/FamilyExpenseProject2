@@ -16,10 +16,10 @@ import java.util.List;
 
 public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
-    private Connection connection = MysqlUtil.getConnection();
+    private final Connection connection = MysqlUtil.getConnection();
 
     @Override
-    public ExpenseRecord getRecordById(int recordId) {
+    public ExpenseRecord get(int recordId) {
         String sql = String.format("SELECT * FROM expense_project.expenserecord where record_id = %d", recordId);
 
         ArrayList<ExpenseRecord> records = MysqlUtil.executeSqlReadQuery(sql, new ResultSetRecordParser());
@@ -41,7 +41,7 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
     }
 
     @Override
-    public List<ExpenseRecord> readAllExpenseRecord() {
+    public List<ExpenseRecord> readAll() {
         String sql = "SELECT * FROM expense_project.expenserecord";
 
         ArrayList<ExpenseRecord> records = MysqlUtil.executeSqlReadQuery(sql, new ResultSetRecordParser());
@@ -49,7 +49,7 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
     }
 
     @Override
-    public void createRecord(ExpenseRecord record) {
+    public void create(ExpenseRecord record) {
         String sql = "INSERT INTO `expense_project`.`expenserecord` (`name`, `user`, `category`, `amount`, `date`) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement statement = null;
@@ -75,7 +75,7 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
     }
 
     @Override
-    public void updateRecord(ExpenseRecord updateRecord) {
+    public void update(ExpenseRecord updateRecord) {
         StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`expenserecord` SET " +
                 "`user_id` = '" + updateRecord.getUser() +
                 "', `category_id` = '" + updateRecord.getCategory() +
@@ -86,7 +86,7 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
     }
 
     @Override
-    public void deleteRecord(int recordId) {
+    public void delete(int recordId) {
         StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`expenserecord` " +
                 "WHERE (`record_id` = '" + recordId + "');");
         MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));

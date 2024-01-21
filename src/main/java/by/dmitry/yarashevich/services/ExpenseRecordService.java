@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ExpenseRecordService {
 
-     private ExpenseRecordDao expenseRecordDao = new RecordHibernateDao();
+     private final ExpenseRecordDao expenseRecordDao = new RecordHibernateDao();
 
     public ExpenseRecordService() {
     }
@@ -22,15 +22,15 @@ public class ExpenseRecordService {
     }
 
     public void createRecord(ExpenseRecord record) {
-        expenseRecordDao.createRecord(record);
+        expenseRecordDao.create(record);
     }
 
     public List<ExpenseRecord> readAllExpenseRecord() {
-        return expenseRecordDao.readAllExpenseRecord();
+        return expenseRecordDao.readAll();
     }
 
     public ExpenseRecord getRecordById(int recordId) {
-        return expenseRecordDao.getRecordById(recordId);
+        return expenseRecordDao.get(recordId);
     }
 
     public List<ExpenseRecord> getRecordsByCategory(ExpenseCategory category) {
@@ -43,10 +43,10 @@ public class ExpenseRecordService {
     }
 
     public void updateRecord(ExpenseRecord record) {
-        expenseRecordDao.updateRecord(record);
+        expenseRecordDao.update(record);
     }
 
     public void deleteRecord(int recordId) {
-        expenseRecordDao.deleteRecord(recordId);
+        expenseRecordDao.delete(recordId);
     }
 }

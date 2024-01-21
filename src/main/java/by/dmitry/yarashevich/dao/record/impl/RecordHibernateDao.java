@@ -1,11 +1,8 @@
 package by.dmitry.yarashevich.dao.record.impl;
 
-import by.dmitry.yarashevich.dao.category.impl.CategoryHibernateDao;
 import by.dmitry.yarashevich.dao.record.ExpenseRecordDao;
-import by.dmitry.yarashevich.dao.user.impl.UserHibernateDao;
 import by.dmitry.yarashevich.models.ExpenseCategory;
 import by.dmitry.yarashevich.models.ExpenseRecord;
-import by.dmitry.yarashevich.models.User;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -14,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +19,7 @@ public class RecordHibernateDao implements ExpenseRecordDao {
     private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     @Override
-    public void createRecord(ExpenseRecord expenseRecord) {
+    public void create(ExpenseRecord expenseRecord) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -35,8 +31,17 @@ public class RecordHibernateDao implements ExpenseRecordDao {
         }
     }
 
+//    @Override
+//    public void createUser(User user) {
+//        HibernateUtil.executeTransaction(session -> {
+//            session.persist(user);
+//            return null;
+//        });
+//    }
+
+
     @Override
-    public List<ExpenseRecord> readAllExpenseRecord() {
+    public List<ExpenseRecord> readAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -51,7 +56,7 @@ public class RecordHibernateDao implements ExpenseRecordDao {
     }
 
     @Override
-    public ExpenseRecord getRecordById(int recordId) {
+    public ExpenseRecord get(int recordId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -92,7 +97,7 @@ public class RecordHibernateDao implements ExpenseRecordDao {
     }
 
     @Override
-    public void updateRecord(ExpenseRecord updatedRecord) {
+    public void update(ExpenseRecord updatedRecord) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -105,7 +110,7 @@ public class RecordHibernateDao implements ExpenseRecordDao {
     }
 
     @Override
-    public void deleteRecord(int recordId) {
+    public void delete(int recordId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {

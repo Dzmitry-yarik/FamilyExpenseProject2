@@ -6,6 +6,6 @@ import by.dmitry.yarashevich.dao.user.impl.UserHibernateDao;
 public class Main {
     public static void main(String[] args) {
         UserHibernateDao userDao = new UserHibernateDao();
-        System.out.println(userDao.readAllUsers());
+        System.out.println(userDao.get(4));
     }
 }

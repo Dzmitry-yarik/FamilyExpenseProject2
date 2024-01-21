@@ -14,10 +14,10 @@ import java.util.List;
 
 public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
 
-    private Connection connection = MysqlUtil.getConnection();
+    private final Connection connection = MysqlUtil.getConnection();
 
     @Override
-    public void createCategory(ExpenseCategory category) {
+    public void create(ExpenseCategory category) {
         String sql = "INSERT INTO `expense_project`.`expensecategory` (`name`) VALUES (?)";
         PreparedStatement statement = null;
         try {
@@ -37,14 +37,14 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public List<ExpenseCategory> readAllExpenseCategory() {
+    public List<ExpenseCategory> readAll() {
         String sql = "SELECT * FROM expense_project.expensecategory";
         ArrayList<ExpenseCategory> categories = MysqlUtil.executeSqlReadQuery(sql, new ResultSetCategoryParser());
         return categories;
     }
 
     @Override
-    public ExpenseCategory getCategoryById(int categoryId) {
+    public ExpenseCategory get(int categoryId) {
         String sql = String.format("SELECT * FROM expense_project.expensecategory where category_id = %d", categoryId);
         ArrayList<ExpenseCategory> categories = MysqlUtil.executeSqlReadQuery(sql, new ResultSetCategoryParser());
         if (CollectionUtils.isNotEmpty(categories)) {
@@ -64,14 +64,14 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public void updateCategory(ExpenseCategory updateCategory) {
+    public void update(ExpenseCategory updateCategory) {
         StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`expensecategory` SET `name` = '" +
                 updateCategory.getName() + "' WHERE (`category_id` = '" + updateCategory.getCategory_id() + "')");
         MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
     }
 
     @Override
-    public void deleteCategory(int categoryId) {
+    public void delete(int categoryId) {
         StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`expensecategory` WHERE (`category_id` = '" +
                 categoryId + "');");
         MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));

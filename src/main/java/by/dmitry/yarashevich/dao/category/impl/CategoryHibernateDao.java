@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryHibernateDao implements ExpenseCategoryDao {
-    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     @Override
-    public void createCategory(ExpenseCategory expenseCategory) {
+    public void create(ExpenseCategory expenseCategory) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -27,7 +27,7 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public List<ExpenseCategory> readAllExpenseCategory() {
+    public List<ExpenseCategory> readAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -41,7 +41,7 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public ExpenseCategory getCategoryById(int categoryId) {
+    public ExpenseCategory get(int categoryId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -73,7 +73,7 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public void updateCategory(ExpenseCategory updatedCategory) {
+    public void update(ExpenseCategory updatedCategory) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -86,7 +86,7 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
     }
 
     @Override
-    public void deleteCategory(int categoryId) {
+    public void delete(int categoryId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
