@@ -13,7 +13,7 @@ public class MysqlUtil {
     public static final String JDBC_USER = "root";
     public static final String JDBC_PASSWORD = "yarik1696";
 
-    private static HikariDataSource dataSource = null;
+    private static final HikariDataSource dataSource;
 
     static {
         HikariConfig config = new HikariConfig();
@@ -32,28 +32,17 @@ public class MysqlUtil {
             Class.forName(MYSQL_JDBC_DRIVER);
             connection = dataSource.getConnection();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return connection;
-    }
-
-    public static void executeSqlQueryTryWithResources(String sql) {
-        try (Connection connection = MysqlUtil.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static <T> ArrayList<T> executeSqlReadQuery(String sql, ResultSetParser parser) {
         ArrayList<T> objectList = new ArrayList<>();
         try {
             Connection connection = MysqlUtil.getConnection();
-
             Statement statement = connection.createStatement();
-
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 T object = (T) parser.parserObject(resultSet);
@@ -63,5 +52,17 @@ public class MysqlUtil {
             throw new RuntimeException(e);
         }
         return objectList;
+    }
+
+    public static void executeSqlQueryTryWithResources(String sql, Object... params) {
+        try (Connection connection = MysqlUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                statement.setObject(i + 1, params[i]);
+            }
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

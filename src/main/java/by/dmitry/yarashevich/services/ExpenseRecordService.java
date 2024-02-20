@@ -8,6 +8,7 @@ import by.dmitry.yarashevich.models.User;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class ExpenseRecordService {
 
@@ -33,7 +34,7 @@ public class ExpenseRecordService {
         return expenseRecordDao.get(recordId);
     }
 
-    public List<ExpenseRecord> getRecordsByCategory(ExpenseCategory category) {
+    public Optional<List<ExpenseRecord>> getRecordsByCategory(ExpenseCategory category) {
         return expenseRecordDao.getRecordsByCategory(category);
     }
 

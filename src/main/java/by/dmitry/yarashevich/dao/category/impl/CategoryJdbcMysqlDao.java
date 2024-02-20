@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.dmitry.yarashevich.dao.util.MysqlUtil.executeSqlQueryTryWithResources;
+
 public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
 
     private final Connection connection = MysqlUtil.getConnection();
@@ -65,15 +67,13 @@ public class CategoryJdbcMysqlDao implements ExpenseCategoryDao {
 
     @Override
     public void update(ExpenseCategory updateCategory) {
-        StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`expensecategory` SET `name` = '" +
-                updateCategory.getName() + "' WHERE (`category_id` = '" + updateCategory.getCategory_id() + "')");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "UPDATE `expense_project`.`expensecategory` SET `name` = ? WHERE `category_id` = ?";
+        executeSqlQueryTryWithResources(sql, updateCategory.getName(), updateCategory.getCategory_id());
     }
 
     @Override
     public void delete(int categoryId) {
-        StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`expensecategory` WHERE (`category_id` = '" +
-                categoryId + "');");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "DELETE FROM `expense_project`.`expensecategory` WHERE `category_id` = ?";
+        executeSqlQueryTryWithResources(sql, categoryId);
     }
 }

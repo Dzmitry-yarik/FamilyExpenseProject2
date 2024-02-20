@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
@@ -30,14 +31,14 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
     }
 
     @Override
-    public List<ExpenseRecord> getRecordsByCategory(ExpenseCategory category) {
+    public Optional<List<ExpenseRecord>> getRecordsByCategory(ExpenseCategory category) {
         String sql = String.format("SELECT * FROM expense_project.expenserecord where category_id = %d", category.getCategory_id());
 
         ArrayList<ExpenseRecord> records = MysqlUtil.executeSqlReadQuery(sql, new ResultSetRecordParser());
         if (CollectionUtils.isNotEmpty(records)) {
-            return records;
+            return Optional.of(records);
         }
-        return new ArrayList<>();
+        return Optional.empty();
     }
 
     @Override
@@ -76,19 +77,15 @@ public class RecordJdbcMysqlDao implements ExpenseRecordDao {
 
     @Override
     public void update(ExpenseRecord updateRecord) {
-        StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`expenserecord` SET " +
-                "`user_id` = '" + updateRecord.getUser() +
-                "', `category_id` = '" + updateRecord.getCategory() +
-                "', `amount` = '" + updateRecord.getAmount() +
-                "', `date` = '" + updateRecord.getDate() +
-                "' WHERE (`record_id` = '" + updateRecord.getRecord_id() + "')");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "UPDATE  `expense_project`.`expenserecord` SET " +
+                "`user_id` = ?, `category_id` = ?, `amount` = ?, `date` = ? WHERE (`record_id` = ?)";
+        MysqlUtil.executeSqlQueryTryWithResources(sql, updateRecord.getUser(), updateRecord.getCategory(),
+                updateRecord.getAmount(), updateRecord.getDate(),updateRecord.getRecord_id());
     }
 
     @Override
     public void delete(int recordId) {
-        StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`expenserecord` " +
-                "WHERE (`record_id` = '" + recordId + "');");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "DELETE FROM `expense_project`.`expenserecord` WHERE (`record_id` = ?)";
+        MysqlUtil.executeSqlQueryTryWithResources(sql, recordId);
     }
 }

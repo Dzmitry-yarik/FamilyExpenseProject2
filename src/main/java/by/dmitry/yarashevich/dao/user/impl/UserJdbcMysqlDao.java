@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserJdbcMysqlDao implements UserDao {
 
@@ -52,9 +53,7 @@ public class UserJdbcMysqlDao implements UserDao {
     @Override
     public void create(User user) {
         String sql = "INSERT INTO `expense_project`.`user` (`name`, `password`) VALUES (?, ?)";
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(sql);
+        try ( PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.executeUpdate();
@@ -62,7 +61,6 @@ public class UserJdbcMysqlDao implements UserDao {
             throw new RuntimeException(e);
         } finally {
             try {
-                statement.close();
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -71,7 +69,9 @@ public class UserJdbcMysqlDao implements UserDao {
     }
 
     public void create(List<User> userList) {
+        //Statement для примера, почти всегда лучше использовать PreparedStatement
         try (Statement statement = connection.createStatement()) {
+//  отключает автоматическое фиксирование транзакций, что позволяет выполнять несколько операций в рамках одной транзакции
             connection.setAutoCommit(false);
             try {
                 for (User user : userList) {
@@ -90,14 +90,13 @@ public class UserJdbcMysqlDao implements UserDao {
 
     @Override
     public void update(User updatedUser) {
-        StringBuilder sql = new StringBuilder("UPDATE  `expense_project`.`user` SET `name` = '" + updatedUser.getName() +
-                "', `password` = '" + updatedUser.getPassword() + "' WHERE (`user_id` = '" + updatedUser.getUser_id() + "')");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "UPDATE  `expense_project`.`user` SET `name` = ?, `password` = ? WHERE (`user_id` = ?)";
+        MysqlUtil.executeSqlQueryTryWithResources(sql, updatedUser.getName(), updatedUser.getPassword(), updatedUser.getUser_id());
     }
 
     @Override
     public void delete(int userId) {
-        StringBuilder sql = new StringBuilder("DELETE FROM `expense_project`.`user` WHERE (`user_id` = '" + userId + "');");
-        MysqlUtil.executeSqlQueryTryWithResources(String.valueOf(sql));
+        String sql = "DELETE FROM `expense_project`.`user` WHERE (`user_id` = ?)";
+        MysqlUtil.executeSqlQueryTryWithResources(sql, userId);
     }
 }
