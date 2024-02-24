@@ -54,7 +54,12 @@ public class RecordHibernateDao implements ExpenseRecordDao {
 
     @Override
     public void delete(int recordId) {
-        HibernateUtil.executeTransaction(session ->
-                session.get(ExpenseRecord.class, recordId));
+        HibernateUtil.executeTransaction(session -> {
+            ExpenseRecord expenseRecordById = session.get(ExpenseRecord.class, recordId);
+            if (expenseRecordById != null) {
+                session.remove(expenseRecordById);
+            }
+            return Optional.empty();
+        });
     }
 }

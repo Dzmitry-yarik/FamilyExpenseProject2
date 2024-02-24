@@ -40,7 +40,7 @@ public class RecordServlet extends HttpServlet {
             req.getRequestDispatcher("/pages/record/expense-record-form.jsp").forward(req, resp);
 
         } else if ("save-record".equals(action)) {
-            if (validateParameters(req, resp)) {
+            if (validateParameters(req)) {
                 handleSaveRecordAction(req, resp);
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Go back and fill in all the fields of the form");
@@ -50,7 +50,7 @@ public class RecordServlet extends HttpServlet {
             handleEditRecordAction(req, resp);
 
         } else if ("update-record".equals(action)) {
-            if (validateParameters(req, resp)) {
+            if (validateParameters(req)) {
                 handleUpdateRecordAction(req, resp);
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Go back and fill in all the fields of the form");
@@ -98,7 +98,7 @@ public class RecordServlet extends HttpServlet {
         return new ExpenseRecord(recordId, name, amount, date, user, category);
     }
 
-    private boolean validateParameters(HttpServletRequest req, HttpServletResponse resp) {
+    private boolean validateParameters(HttpServletRequest req) {
         String name = req.getParameter("name");
         String amount = req.getParameter("amount");
         String date = req.getParameter("date");

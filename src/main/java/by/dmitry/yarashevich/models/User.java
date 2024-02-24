@@ -1,11 +1,8 @@
 package by.dmitry.yarashevich.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -13,6 +10,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class User {
 
     @Id
@@ -48,27 +47,5 @@ public class User {
         this.name = name;
         this.password = password;
         this.recordSet = recordSet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return user_id == user.user_id && Objects.equals(name, user.name) && Objects.equals(password, user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(user_id, name, password);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + user_id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

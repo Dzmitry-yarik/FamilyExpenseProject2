@@ -67,7 +67,7 @@
             <td>
                 <form action="category" method="post">
                     <input type="hidden" name="userId" value="${user.user_id}">
-                    <input type="hidden" name="action" value="user_categories">
+                    <input type="hidden" name="action" value="user-categories">
                     <button type="submit">${user.name}</button>
                 </form>
             </td>

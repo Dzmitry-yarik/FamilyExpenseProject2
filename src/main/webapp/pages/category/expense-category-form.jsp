@@ -8,7 +8,7 @@
 
 <body>
 <h1>Category Form</h1>
-<form action="category" method="post">
+<form action="${empty category ? '/save-category' : '/update-category'}" method="post">
     <input type="hidden" name="action" value="${empty category ? 'save-category' : 'update-category'}">
     <input type="hidden" name="id" value="${empty category ? '' : category.category_id}">
     <label for="name">Name:</label>

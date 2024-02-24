@@ -26,14 +26,14 @@
                     <td>${record.name}</td>
                     <td>${record.amount}</td>
                     <td>
-                        <form action="category" method="post">
+                        <form action="edit-category" method="post">
                             <input type="hidden" name="action" value="edit-category">
                             <input type="hidden" name="id" value="${category.category_id}">
                             <button type="submit">Edit</button>
                         </form>
                     </td>
                     <td>
-                        <form action="category" method="post">
+                        <form action="delete-category" method="post">
                             <input type="hidden" name="action" value="delete-category">
                             <input type="hidden" name="id" value="${category.category_id}">
                             <button type="submit">Delete</button>

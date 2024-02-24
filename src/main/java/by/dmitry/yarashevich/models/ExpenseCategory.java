@@ -1,11 +1,8 @@
 package by.dmitry.yarashevich.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -13,6 +10,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class ExpenseCategory {
 
     @Id
@@ -47,26 +46,5 @@ public class ExpenseCategory {
         this.category_id = category_id;
         this.name = name;
         this.recordSet = recordSet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ExpenseCategory that = (ExpenseCategory) o;
-        return category_id == that.category_id && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(category_id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "ExpenseCategory{" +
-                "id=" + category_id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

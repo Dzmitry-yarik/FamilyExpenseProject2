@@ -43,7 +43,12 @@ public class CategoryHibernateDao implements ExpenseCategoryDao {
 
     @Override
     public void delete(int categoryId) {
-        HibernateUtil.executeTransaction(session ->
-                session.get(ExpenseCategory.class, categoryId));
+        HibernateUtil.executeTransaction(session -> {
+            ExpenseCategory expenseCategoryById = session.get(ExpenseCategory.class, categoryId);
+            if (expenseCategoryById != null) {
+                session.remove(expenseCategoryById);
+            }
+            return Optional.empty();
+        });
     }
 }

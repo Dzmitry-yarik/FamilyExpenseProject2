@@ -55,7 +55,7 @@ public class CategoryServlet extends HttpServlet {
             expenseCategoryService.deleteCategory(categoryId);
             resp.sendRedirect("category?action=list");
 
-        } else if ("user_categories".equals(action)) {
+        } else if ("user-categories".equals(action)) {
             handleUserCategoriesAction(req, resp);
         }
     }
@@ -101,7 +101,7 @@ public class CategoryServlet extends HttpServlet {
         req.setAttribute("user", user);
         req.setAttribute("recordsSet", recordsSet);
         req.setAttribute("categories", userCategories);
-        req.getRequestDispatcher("/pages/category/user_categories.jsp").forward(req, resp);
+        req.getRequestDispatcher("/pages/category/user-categories.jsp").forward(req, resp);
     }
 
     private Set<ExpenseCategory> extractCategoriesFromRecords(Set<ExpenseRecord> recordsSet) {

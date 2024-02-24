@@ -3,6 +3,7 @@ package by.dmitry.yarashevich.dao.user.impl;
 import by.dmitry.yarashevich.dao.user.UserDao;
 import by.dmitry.yarashevich.dao.util.HibernateUtil;
 import by.dmitry.yarashevich.models.User;
+
 import java.util.List;
 import java.util.Optional;
 

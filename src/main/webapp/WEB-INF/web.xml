@@ -23,13 +23,61 @@
         <url-pattern>/record/*</url-pattern>
     </servlet-mapping>
 
+<!--    <servlet>-->
+<!--        <servlet-name>categoryServlet</servlet-name>-->
+<!--        <servlet-class>by.dmitry.yarashevich.servlet.CategoryServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>categoryServlet</servlet-name>-->
+<!--        <url-pattern>/category/*</url-pattern>-->
+<!--    </servlet-mapping>-->
+
     <servlet>
-        <servlet-name>categoryServlet</servlet-name>
-        <servlet-class>by.dmitry.yarashevich.servlet.CategoryServlet</servlet-class>
+        <servlet-name>saveCategoryServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.SaveCategoryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>categoryServlet</servlet-name>
-        <url-pattern>/category/*</url-pattern>
+        <servlet-name>saveCategoryServlet</servlet-name>
+        <url-pattern>/save-category/*</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>createCategoryServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.CreateCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createCategoryServlet</servlet-name>
+        <url-pattern>/create-category/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>deleteCategoryServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.DeleteCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteCategoryServlet</servlet-name>
+        <url-pattern>/delete-category/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>editCategoryServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.EditCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editCategoryServlet</servlet-name>
+        <url-pattern>/edit-category/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>updateCategoryServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.UpdateCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateCategoryServlet</servlet-name>
+        <url-pattern>/update-category/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>userCategoriesServlet</servlet-name>
+        <servlet-class>by.dmitry.yarashevich.servlet.Category.UserCategoriesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userCategoriesServlet</servlet-name>
+        <url-pattern>/user-categories/*</url-pattern>
+    </servlet-mapping>
 </web-app>

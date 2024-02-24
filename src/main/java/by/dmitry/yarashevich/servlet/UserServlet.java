@@ -77,7 +77,6 @@ public class UserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
         User newUser = new User(name, password);
-
         boolean userExists = userService.readAllUsers().stream().anyMatch(user -> name.equals(user.getName()));
 
         if (!userExists) {
@@ -115,15 +114,11 @@ public class UserServlet extends HttpServlet {
 
     public int readInitialAmountFromFile() {
         int initialAmount = 0;
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-
             while ((line = br.readLine()) != null) {
                 if (line.contains("initialAmount")) {
-
                     String[] parts = line.split("=");
-
                     if (parts.length == 2) {
                         initialAmount = Integer.parseInt(parts[1].trim());
                         break;

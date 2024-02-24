@@ -12,7 +12,9 @@ public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        return new Configuration().configure(new File("src/main/resources/hibernate.cfg.xml")).buildSessionFactory();
+//        return new Configuration().configure(new File("src/main/resources/hibernate.cfg.xml")).buildSessionFactory();
+        return new Configuration().configure(new File("C:/Users/Professional/IdeaProjects/FamilyExpenseProject/src/main/resources/hibernate.cfg.xml")).buildSessionFactory();
+
     }
 
     public static <T> T executeTransaction(Function<Session, T> action) {
@@ -23,6 +25,7 @@ public class HibernateUtil {
             result = action.apply(session);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             transaction.rollback();
             throw new RuntimeException(e);
         } finally {
